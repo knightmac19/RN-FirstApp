@@ -1,40 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import React from 'react';
+import { StyleSheet, TextInput, View, Button} from 'react-native';
 
 export default function App() {
-  const [hello, setHello] = useState(true)
-  const [goodbye, setGoodbye] = useState(false)
-  const [output, setOutput] = useState('Press me!');
-
-  const toggle = () => {
-    if (hello) {
-      setOutput('Hello World!');
-      setHello(false);
-      setGoodbye(true);
-    } else {
-      setOutput('Goodbye World!');
-      setHello(true);
-      setGoodbye(false);
-    }
-  }
-
   return (
-    <View style={styles.container}>
-      <Text >{output}</Text>
-      <Button title="Change Text" onPress={() => toggle()} />
+    <View style={{padding: 50}}>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+        <TextInput 
+          placeholder="Add Course Goal" 
+          style={{flex: 1, borderColor: 'black', borderWidth: 1, padding: 10, margin: 10}}/>
+        <Button title="+" style={{}}/>
+      </View>
+      <View />
 
-
-      <StatusBar style="auto" />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
 });
