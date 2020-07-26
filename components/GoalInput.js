@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { 
+  View, 
+  TextInput, 
+  Button, 
+  StyleSheet,
+  Modal 
+} from 'react-native';
 
 const GoalInput = props => {
   const [enteredGoal, setEnteredGoal ] = useState('');
@@ -8,29 +14,52 @@ const GoalInput = props => {
     setEnteredGoal(enteredText);
   }; 
 
-  return (
-    <View style={styles.inputContainer}>
-      <TextInput 
-        placeholder="Add Course Goal" 
-        style={styles.courseInput}
-        onChangeText={goalInputHandler}
-        value={enteredGoal}
-        />
-      <Button 
-        title="Add" 
-        style={styles.addButton}
-        onPress={() => props.addGoalHandler(enteredGoal)}
-      />
+  const addGoalHandler = () => {
+    props.onAddGoal(enteredGoal);
+    setEnteredGoal('');
+  };
 
-    </View>
+  return (
+    <Modal 
+      visible={props.isAddMode}
+      animationType="slide"
+    >
+      <View style={styles.inputContainer}>
+        <TextInput 
+          placeholder="Add Course Goal" 
+          style={styles.courseInput}
+          onChangeText={goalInputHandler}
+          value={enteredGoal}
+        />
+        <View style={styles.buttonsContainer}>
+          <View style={styles.button}>
+            <Button 
+              title="CANCEL"
+              color="red" 
+              onPress={props.onCancel}
+            />
+          </View>
+          <View style={styles.button}>
+            <Button 
+              title="ADD" 
+              onPress={addGoalHandler}
+            />
+          </View>
+
+          
+        </View>
+
+
+      </View>
+    </Modal>
+
   );
 };
 
 const styles = StyleSheet.create({
   inputContainer: {
-    
-    flexDirection: 'row', 
-    justifyContent: 'space-between', 
+    flex: 1,
+    justifyContent: 'center', 
     alignItems: 'center'
   },
 
@@ -39,11 +68,20 @@ const styles = StyleSheet.create({
     borderColor: 'black', 
     borderWidth: 1, 
     padding: 10, 
+    marginBottom: 10
   },
 
-  addButton: {
-    
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '50%'
+  },
+
+  button: {
+    width: '40%'
   }
+
 });
 
 export default GoalInput;
