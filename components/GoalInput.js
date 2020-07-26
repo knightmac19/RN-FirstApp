@@ -21,11 +21,6 @@ const GoalInput = props => {
         style={styles.addButton}
         onPress={() => props.addGoalHandler(enteredGoal)}
       />
-      <Button 
-        title="X" 
-        style={styles.deleteButton}
-        onPress={props.clearGoalsHandler}
-      />
 
     </View>
   );
@@ -48,10 +43,6 @@ const styles = StyleSheet.create({
 
   addButton: {
     
-  },
-
-  deleteButton: {
-
   }
 });
 
