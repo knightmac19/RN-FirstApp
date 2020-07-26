@@ -1,56 +1,48 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, Button, ScrollView, FlatList} from 'react-native';
+import GoalItem from './components/GoalItem';
+import GoalInput from './components/GoalInput';
+
 
 export default function App() {
-  const [enteredGoal, setEnteredGoal ] = useState('');
+  
   const [courseGoals, setCourseGoals] = useState([]);
 
-  const goalInputHandler = enteredText => {
-    setEnteredGoal(enteredText);
-  }; 
+  
   
   const clearGoalsHandler = () => {
     setCourseGoals([]);
   }
 
-  const addGoalHandler = () => {
+  const addGoalHandler = goalTitle => {
     
-    setCourseGoals(currentGoals => [...currentGoals, {key: Math.random().toString(), value: enteredGoal}]);
-    // setCourseGoals([]);
-    setEnteredGoal('');
+    setCourseGoals(currentGoals => [
+      ...currentGoals, 
+      {
+        key: Math.random().toString(), 
+        value: goalTitle
+      }
+    ]);
   };
 
   return (
     <View style={styles.screen}>
-      <View style={styles.inputContainer}>
-        <TextInput 
-          placeholder="Add Course Goal" 
-          style={styles.courseInput}
-          onChangeText={goalInputHandler}
-          value={enteredGoal}
-          />
-        <Button 
-          title="+" 
-          style={styles.addButton}
-          onPress={addGoalHandler}
-        />
-        <Button 
-          title="X" 
-          style={styles.deleteButton}
-          onPress={clearGoalsHandler}
-        />
-
-      </View>
+      <GoalInput 
+        addGoalHandler = {addGoalHandler}
+        clearGoalsHandler = {clearGoalsHandler}
+      />
+        
+      <View>
         <FlatList
           data={courseGoals}
           renderItem={itemData => (
-            <View style={styles.listItem}>
-              <Text >{itemData.item.value}</Text>
-            </View>
+            <GoalItem 
+              goal = {itemData.item.value} 
+              onDelete={() => console.log("onDelete")}
+            />
           )}  
         />
-
-      <View />
+      </View>
 
     </View>
   );
@@ -78,14 +70,7 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
 
-  },
-  listItem: {
-    width: '85%',
-    marginTop: 10,
-    padding: 10,
-    backgroundColor: '#ccc',
-    borderColor: 'black',
-    borderWidth: 1
   }
+  
 
 });
